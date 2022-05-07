@@ -1,3 +1,11 @@
+Date.prototype.isCurrentMonth = function (d) { 
+    return d.getMonth() == this.getMonth(); 
+}; 
+
+Date.prototype.isWeekend = function () { 
+    return [0, 6].includes(this.getDay()); 
+}; 
+
 class Utilities {
 
     static WEEK_DAYS=6;
