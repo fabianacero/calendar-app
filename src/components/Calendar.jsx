@@ -1,23 +1,15 @@
 import { render } from 'solid-js/web';
-import { Index, createMemo, createEffect } from 'solid-js';
 import DaySquare from "./DaySquare";
 import WeekName from "./WeekName";
 import Utilities from '../utilities/Utilities';
 
 function Calendar() {
-    const maxGridPixelWidth = 380;
     const weekNames = Utilities.getWeekNames(true);
-    const calendar = Utilities.getCalendarArray(new Date());
-    const gridTemplateString = createMemo(() =>
-        `repeat(${7}, ${maxGridPixelWidth / 5}px)`
-    );
+    const currentMonth = new Date();
+    const calendar = Utilities.getCalendarArray(currentMonth);
 
     return (
-        <div  style={{
-            display: "grid",
-            "grid-template-rows": gridTemplateString(),
-            "grid-template-columns": gridTemplateString(),
-          }}>
+        <div class="grid grid-cols-7 p-5">
             <For each={weekNames} fallback={"Not week names to print"}>
                 {(n,i) =>
                 <WeekName name={n}/>
@@ -26,7 +18,7 @@ function Calendar() {
                 {(w,i) =>
                 <For each={w} fallback={"Not days to print"}>
                     {(d,j) =>
-                    <DaySquare day={d.getDate()}/>
+                    <DaySquare day={d} month={currentMonth}/>
                 }</For>
             }</For>
         </div>

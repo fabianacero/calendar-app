@@ -1,3 +1,11 @@
+Date.prototype.isCurrentMonth = function (d) { 
+    return d.getMonth() == this.getMonth(); 
+}; 
+
+Date.prototype.isWeekend = function () { 
+    return [0, 6].includes(this.getDay()); 
+}; 
+
 class Utilities {
 
     static WEEK_DAYS=6;
@@ -42,7 +50,7 @@ class Utilities {
     static getAllWeeks = (firstDate, lastDate, calendar) => {
         if(firstDate.getTime() < lastDate.getTime()) {
             const week = this.getWeek(firstDate, []);
-            const lastDayOfWeek = week.slice(-1)[0];
+            const lastDayOfWeek = new Date(week.slice(-1)[0]);
             const nextDayOfNextWeek = new Date(lastDayOfWeek.setDate(lastDayOfWeek.getDate() +  1));
             calendar.push(week);
             return this.getAllWeeks(nextDayOfNextWeek, lastDate, calendar);
