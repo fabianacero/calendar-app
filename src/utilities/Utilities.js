@@ -42,7 +42,7 @@ class Utilities {
     static getAllWeeks = (firstDate, lastDate, calendar) => {
         if(firstDate.getTime() < lastDate.getTime()) {
             const week = this.getWeek(firstDate, []);
-            const lastDayOfWeek = week.slice(-1)[0];
+            const lastDayOfWeek = new Date(week.slice(-1)[0]);
             const nextDayOfNextWeek = new Date(lastDayOfWeek.setDate(lastDayOfWeek.getDate() +  1));
             calendar.push(week);
             return this.getAllWeeks(nextDayOfNextWeek, lastDate, calendar);

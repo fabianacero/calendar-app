@@ -8,16 +8,9 @@ function Calendar() {
     const maxGridPixelWidth = 380;
     const weekNames = Utilities.getWeekNames(true);
     const calendar = Utilities.getCalendarArray(new Date());
-    const gridTemplateString = createMemo(() =>
-        `repeat(${7}, ${maxGridPixelWidth / 5}px)`
-    );
 
     return (
-        <div  style={{
-            display: "grid",
-            "grid-template-rows": gridTemplateString(),
-            "grid-template-columns": gridTemplateString(),
-          }}>
+        <div class="grid grid-cols-7 p-5">
             <For each={weekNames} fallback={"Not week names to print"}>
                 {(n,i) =>
                 <WeekName name={n}/>
