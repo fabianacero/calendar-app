@@ -9,10 +9,30 @@ function getStyleDay(props) {
     return `${commonStyle} ${dayStyle}`;
 }
 export default(props) => {
+    
+    const handler = (data, event) => {
+        // By the way this is intentional
+        // console.log("Here we will call the reminder form!");
+    }
 
-    return <div class="calendar-container bg-gray-50 box-border h-32">
+    return <div onClick={[handler, props]} class="calendar-container bg-gray-50 box-border h-32">
         <div class={getStyleDay(props)}>
             {props.day.getDate()}
         </div>
+        <For each={props.remi}>
+            {(reminder) => {
+                const { id, rem } = reminder;
+                if(rem.day == props.day.getDate()) {
+                    return <div style={{ "background-color": rem.color}} class="reminder-container flex flex-row text-sm">
+                        <div class="px-2">
+                            <input type="checkbox" checked={reminder.completed} />
+                        </div>
+                        <div class="reminder-desc" style={{ "text-decoration": reminder.completed ? "line-through" : "none" }}>
+                            {rem.subject}
+                        </div>
+                    </div>
+                }
+            }}
+        </For>
     </div>
 }

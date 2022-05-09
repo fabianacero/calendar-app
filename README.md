@@ -12,3 +12,5 @@ $> yarn
 `` bash
 $> yarn start
 ``
+3. Evaluate it!
+Feel free to tell me what this could be improved
