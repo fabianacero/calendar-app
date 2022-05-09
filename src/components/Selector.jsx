@@ -10,6 +10,7 @@ export default(props) => {
     return <div>
         <select class="colorpick-ctn flex flex-row" name={props.name}
             onChange={[onSelection, props]}>
+            <option value="" selected disabled hidden>Choose option</option>
             <For each={props.options} fallback={"Not options to print"}>
             {(option,i) =>
                 <option value={option.value}>{option.value}</option>

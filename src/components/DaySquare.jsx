@@ -19,5 +19,20 @@ export default(props) => {
         <div class={getStyleDay(props)}>
             {props.day.getDate()}
         </div>
+        <For each={props.remi}>
+            {(reminder) => {
+                const { id, rem } = reminder;
+                if(rem.day == props.day.getDate()) {
+                    return <div style={{ "background-color": rem.color}} class="reminder-container flex flex-row text-sm">
+                        <div class="px-2">
+                            <input type="checkbox" checked={reminder.completed} />
+                        </div>
+                        <div class="reminder-desc" style={{ "text-decoration": reminder.completed ? "line-through" : "none" }}>
+                            {rem.subject}
+                        </div>
+                    </div>
+                }
+            }}
+        </For>
     </div>
 }

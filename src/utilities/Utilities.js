@@ -1,5 +1,3 @@
-import { debug } from "webpack";
-
 Date.prototype.isCurrentMonth = function (d) { 
     return d.getMonth() == this.getMonth(); 
 }; 
@@ -84,21 +82,33 @@ class Utilities {
     }
 
     static getDayHours = () => {
-        return  [
-            {"name": "8:00", "value": "8:00"},
-            {"name": "9:00", "value": "9:00"},
-            {"name": "10:00", "value": "10:00"},
-            {"name": "11:00", "value": "11:00"},
-        ];
+        const x = 30;
+        const ap = ['AM', 'PM'];
+        let times = [];
+        let tt = 0;
+
+        for (var i=0;tt<24*60; i++) {
+            let hh = Math.floor(tt/60);
+            let mm = (tt%60);
+            let name = ("0" + (hh % 12)).slice(-2) + ':' + ("0" + mm).slice(-2) + ' ' + ap[Math.floor(hh/12)];
+            let value = ("0" + hh ).slice(-2) + ':' + ("0" + mm).slice(-2);
+            times[i] = {name, value};
+            tt = tt + x;
+        }
+
+        return times;
     }
 
-    static getDays = () => {
-        return  [
-            {"name": "1", "value": "1"},
-            {"name": "2", "value": "2"},
-            {"name": "3", "value": "3"},
-            {"name": "4", "value": "4"},
-        ];
+    static getDays = (month) => {
+        const date = new Date(month.getFullYear(), month.getMonth(), 1);
+        let dates = [];
+        let day = new Date();
+        while (date.getMonth() === month.getMonth()) {
+            day = new Date(date);
+            dates.push({"name": day.getDate(), "value": day.getDate()}) 
+            date.setDate(date.getDate() + 1);
+        }
+        return dates;
     }
 
     static getCities = () => {
@@ -108,6 +118,23 @@ class Utilities {
             {"name": "New York", "value": "New York"},
             {"name": "Miami", "value": "Miami"},
         ];
+    }
+
+    static sortRemiders = (reminders) => {
+        const baseDate = new Date();
+        const baseYear = baseDate.getFullYear();
+        let sortedReminders = [...reminders];
+        let strStartDate, strEndDate, dtStartDate, dtEndDate = '';
+        return sortedReminders.sort(
+            (a, b) => {
+                strStartDate = `${baseYear} ${a.rem.month}, ${a.rem.day}, ${a.rem.hour}`;
+                strEndDate = `${baseYear} ${b.rem.month}, ${b.rem.day}, ${b.rem.hour}`;
+                dtStartDate = new Date(strStartDate);
+                dtEndDate = new Date(strEndDate);
+                if (dtStartDate < dtEndDate) return -1;
+                else if(strStartDate > dtEndDate) return  1;
+                else return 0;
+            });
     }
 }
 

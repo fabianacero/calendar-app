@@ -52,13 +52,15 @@ const Reminder = (props) => {
             </div>
             <div class="flex flex-row">
                 <span class="px-3 inline-block align-middle">Day</span>
-                <Selector name="remiderDay" options={Utilities.getDays()} setOption={setDay}/>
+                <Selector name="remiderDay" options={Utilities.getDays(props.month)} setOption={setDay}/>
                 <span class="px-3 inline-block align-middle">Hour</span>
                 <Selector name="remiderHour" options={Utilities.getDayHours()} setOption={setHour}/>
             </div>
             <div class="flex flex-row">
                 <span class="px-3 inline-block align-middle">City</span>
-                <Selector name="remiderCity" options={Utilities.getCities()} setOption={setCity}/>
+                <Selector name="remiderCity" 
+                options={Utilities.getCities()} 
+                setOption={setCity}/>
             </div>
             <div class="flex flex-row py-2">
             <textarea

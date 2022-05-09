@@ -12,27 +12,13 @@ function Calendar() {
     const [reminders, setReminders] = createStore({ reminders: [] });
 
     const addReminder = (rem) => {
-        setReminders(rem);
-        console.log(reminders.reminders);
+        const sortedReminders = Utilities.sortRemiders(rem.reminders);
+        setReminders({reminders: sortedReminders});
     }
 
     return (
         <div class="">
-            <Reminder setReminders={addReminder}/>
-            <For each={reminders.reminders}>
-                {(reminder) => {
-                const { id, rem } = reminder;
-                console.log(`Creating ${rem}`)
-                return <div style={{ "background-color": rem.color}}>
-                    <div class="px-2">
-                        <input type="checkbox" checked={reminder.completed} />
-                    </div>
-                    <span style={{ "text-decoration": reminder.completed ? "line-through" : "none" }}>
-                        {rem.subject}
-                    </span>
-                </div>
-                }}
-            </For>
+            <Reminder setReminders={addReminder} month={currentMonth} />
             <div class="grid grid-cols-7 p-5">
                 <For each={weekNames} fallback={"Not week names to print"}>
                     {(n,i) =>
