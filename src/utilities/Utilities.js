@@ -1,3 +1,5 @@
+import { debug } from "webpack";
+
 Date.prototype.isCurrentMonth = function (d) { 
     return d.getMonth() == this.getMonth(); 
 }; 
@@ -70,6 +72,42 @@ class Utilities {
         const longNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const shortNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         return short ? shortNames : longNames
+    }
+
+    static getRemiderColors = () => {
+        return  [
+            {"name": "blue", "value": "#2a67d1"},
+            {"name": "red", "value": "#b52222"},
+            {"name": "green", "value": "#3dab35"},
+            {"name": "yellow", "value": "#d6bf3a"},
+        ];
+    }
+
+    static getDayHours = () => {
+        return  [
+            {"name": "8:00", "value": "8:00"},
+            {"name": "9:00", "value": "9:00"},
+            {"name": "10:00", "value": "10:00"},
+            {"name": "11:00", "value": "11:00"},
+        ];
+    }
+
+    static getDays = () => {
+        return  [
+            {"name": "1", "value": "1"},
+            {"name": "2", "value": "2"},
+            {"name": "3", "value": "3"},
+            {"name": "4", "value": "4"},
+        ];
+    }
+
+    static getCities = () => {
+        return  [
+            {"name": "Bogota", "value": "Bogota"},
+            {"name": "Rio", "value": "Rio"},
+            {"name": "New York", "value": "New York"},
+            {"name": "Miami", "value": "Miami"},
+        ];
     }
 }
 

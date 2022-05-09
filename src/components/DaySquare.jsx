@@ -9,8 +9,13 @@ function getStyleDay(props) {
     return `${commonStyle} ${dayStyle}`;
 }
 export default(props) => {
+    
+    const handler = (data, event) => {
+        // By the way this is intentional
+        // console.log("Here we will call the reminder form!");
+    }
 
-    return <div class="calendar-container bg-gray-50 box-border h-32">
+    return <div onClick={[handler, props]} class="calendar-container bg-gray-50 box-border h-32">
         <div class={getStyleDay(props)}>
             {props.day.getDate()}
         </div>
