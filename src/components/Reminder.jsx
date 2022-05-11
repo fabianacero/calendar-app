@@ -9,7 +9,7 @@ const Reminder = (props) => {
     const [reminders, setReminders] = createStore({ reminders: [] });
     const [color, setColor] = createSignal("#2a67d1");
     const [subject, setSubject] = createSignal("");
-    const [month, setMonth] = createSignal(1);
+    const [month, setMonth] = createSignal("0");
     const [day, setDay] = createSignal(1);
     const [hour, setHour] = createSignal("");
     const [city, setCity] = createSignal("");
@@ -20,10 +20,10 @@ const Reminder = (props) => {
     const updateReminder = (id) => {
         setReminders("reminders", reminders => reminders.id === id, "completed", completed => !completed);
     }
-    const fn = (form) => {
+    const fn = (form) => {      
         let reminderSubject = document.getElementById("reminderSubject").value;
         if(color() && day() && hour() && city() 
-        && reminderSubject != "") {
+        && reminderSubject != "" && month()) {
             setSubject(reminderSubject);
             addReminder({
                 "color": color(), 
@@ -51,16 +51,18 @@ const Reminder = (props) => {
                 <ColorPicker color={color()} setColor={setColor} />
             </div>
             <div class="flex flex-row">
-                <span class="px-3 inline-block align-middle">Day</span>
-                <Selector name="remiderDay" options={Utilities.getDays(props.month)} setOption={setDay}/>
-                <span class="px-3 inline-block align-middle">Hour</span>
-                <Selector name="remiderHour" options={Utilities.getDayHours()} setOption={setHour}/>
+                <span class="px-3 inline-block align-middle">Date</span>
+                <Selector name="remiderMonth" options={Utilities.getMonths(props.month)} 
+                    setOption={setMonth} placeholder="Month" />
+                <Selector name="remiderDay" options={Utilities.getDays(props.month)}
+                    setOption={setDay} placeholder="Day" />
+                <Selector name="remiderHour" options={Utilities.getDayHours()} 
+                    setOption={setHour} placeholder="Hour" />
             </div>
             <div class="flex flex-row">
                 <span class="px-3 inline-block align-middle">City</span>
-                <Selector name="remiderCity" 
-                options={Utilities.getCities()} 
-                setOption={setCity}/>
+                <Selector name="remiderCity" options={Utilities.getCities()} 
+                setOption={setCity} placeholder="Select a city"/>
             </div>
             <div class="flex flex-row py-2">
             <textarea
