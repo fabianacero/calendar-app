@@ -2,6 +2,10 @@ Date.prototype.isCurrentMonth = function (d) {
     return d.getMonth() == this.getMonth(); 
 }; 
 
+Date.prototype.isTheSameMonth = function (d) { 
+    return d == (this.getMonth() + 1); 
+}; 
+
 Date.prototype.isWeekend = function () { 
     return [0, 6].includes(this.getDay()); 
 }; 
@@ -109,6 +113,20 @@ class Utilities {
             date.setDate(date.getDate() + 1);
         }
         return dates;
+    }
+
+    static getMonths = (currentMonth) => {
+        let months = [];
+        const shortNames = ["NaN", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", 
+            "Ago","Sep","Oct","Nov","Dec"];
+        const curMonth = (currentMonth.getMonth() + 1);
+        for(let i=1; i<=12; i++) {
+            months.push({"name": shortNames[i], 
+                "value": i, 
+                "selected": curMonth == i
+            });
+        }
+        return months;
     }
 
     static getCities = () => {
