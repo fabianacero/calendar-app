@@ -18,7 +18,7 @@ export default(props) => {
 
     return <div class="px-3 inline-block align-middle">
         <select class="h-12 min-h-full" name={props.name}
-            onChange={[onSelection, props]} >
+            onChange={[onSelection, props]} classList={props.classList} >
             <option value="" selected disabled hidden>{props.placeholder || 'Choose option'}</option>
             <For each={props.options} fallback={"Not options to print"}>
             {(opt,i) =>

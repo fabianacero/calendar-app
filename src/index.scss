@@ -29,6 +29,12 @@ span {
 }
 
 @layer utilities {
+    
+    div.error, select.error, textarea.error {
+        border: 2px solid #ab2c2c;
+        border-radius: 0.5rem
+    }
+
     .calendar-container {
         border-radius: theme('borderRadius.lg');
         padding: theme('spacing.4');
