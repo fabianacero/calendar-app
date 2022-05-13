@@ -3,13 +3,14 @@ import Utilities from '../utilities/Utilities';
 
 function createColorPicker(props) {
 
-    const [color, setColor] = createSignal(props.color || "#2a67d1");
+    const [color, setColor] = createSignal(props.color);
     const onColorClick = (data) => {
         setColor(data.value);
         props.setColor(data.value);
     };
 
-    return <div class="colorpick-ctn flex flex-row" selected-color={color()}>
+    return <div class="colorpick-ctn flex flex-row" selected-color={color()} 
+        classList={props.classList}>
         <For each={Utilities.getRemiderColors()} fallback={"Not week names to print"}>
         {(c,i) =>
             <div class="w-8 h-8 m-1 hover:border-blue-600" name={c.name}

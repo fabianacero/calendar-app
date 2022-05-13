@@ -1,27 +1,41 @@
 import { createStore } from "solid-js/store";
+import { createSignal } from "solid-js";
 import ColorPicker from "./ColorPicker";
 import Selector from "./Selector";
 import Utilities from "../utilities/Utilities";
-import { createSignal } from "solid-js";
 
 const Reminder = (props) => {
     let remiderId = 0;
     const [reminders, setReminders] = createStore({ reminders: [] });
-    const [color, setColor] = createSignal("#2a67d1");
+    const [validation, setValidation] = createSignal({});
+    const [color, setColor] = createSignal("");
     const [subject, setSubject] = createSignal("");
-    const [month, setMonth] = createSignal("0");
-    const [day, setDay] = createSignal(1);
+    const [month, setMonth] = createSignal(0);
+    const [day, setDay] = createSignal(0);
     const [hour, setHour] = createSignal("");
     const [city, setCity] = createSignal("");
+
     const addReminder = (rem) => {
         setReminders("reminders", reminders => [...reminders, { id: ++remiderId, rem, completed: false }]);
         props.setReminders(reminders);
     }
+
     const updateReminder = (id) => {
         setReminders("reminders", reminders => reminders.id === id, "completed", completed => !completed);
     }
+
     const fn = (form) => {      
         let reminderSubject = document.getElementById("reminderSubject").value;
+        let validations = {
+            color: !color(), 
+            month: !month(), 
+            day: !day(), 
+            hour: !hour(),
+            city: !city(),
+            subject: !reminderSubject
+        };
+
+        setValidation(validations);
         if(color() && day() && hour() && city() 
         && reminderSubject != "" && month()) {
             setSubject(reminderSubject);
@@ -48,24 +62,30 @@ const Reminder = (props) => {
             <form use:formSubmit={fn}>
             <div class="flex flex-row">
                 <span class="px-3 inline-block align-middle">Tag</span>
-                <ColorPicker color={color()} setColor={setColor} />
+                <ColorPicker color={color()} setColor={setColor} 
+                    classList={{"error": validation()?.color || false}}/>
             </div>
             <div class="flex flex-row">
                 <span class="px-3 inline-block align-middle">Date</span>
                 <Selector name="remiderMonth" options={Utilities.getMonths(props.month)} 
-                    setOption={setMonth} placeholder="Month" />
+                    setOption={setMonth} placeholder="Month" 
+                    classList={{"error": validation()?.month || false}}/>
                 <Selector name="remiderDay" options={Utilities.getDays(props.month)}
-                    setOption={setDay} placeholder="Day" />
+                    setOption={setDay} placeholder="Day" 
+                    classList={{"error": validation()?.day || false}}/>
                 <Selector name="remiderHour" options={Utilities.getDayHours()} 
-                    setOption={setHour} placeholder="Hour" />
+                    setOption={setHour} placeholder="Hour"
+                    classList={{"error": validation()?.hour || false}} />
             </div>
             <div class="flex flex-row">
                 <span class="px-3 inline-block align-middle">City</span>
                 <Selector name="remiderCity" options={Utilities.getCities()} 
-                setOption={setCity} placeholder="Select a city"/>
+                setOption={setCity} placeholder="Select a city"
+                classList={{"error": validation()?.city || false}}/>
             </div>
             <div class="flex flex-row py-2">
             <textarea
+                classList={{"error": validation()?.subject || false}}
                 class="form-control block w-full px-3 py-1.5
                     text-base font-normaltext-gray-700bg-white bg-clip-padding
                     border border-solid border-gray-300 rounded transition ease-in-out
